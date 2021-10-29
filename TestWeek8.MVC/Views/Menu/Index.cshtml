@@ -1,0 +1,57 @@
+﻿@model IEnumerable<MenuViewModel>
+
+@if (User.IsInRole("Ristoratore")) 
+{
+    <a asp-controller="Menu" asp-action="Create" class="btn btn-primary">Inserisci un nuovo Menu</a>
+}
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">I nostri Menu</th>
+            @if (User.IsInRole("Ristoratore"))
+            {
+                <th scope="col">Cancella</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-controller="Menu" asp-action="Details" asp-route-id="@item.Id">@item.Nome</a>
+                </td>
+                @if (User.IsInRole("Ristoratore"))
+                {
+                    <td>
+                        <a href="#" onclick="deleteMenu(@item.Id)" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                    </td>
+                }             
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts{
+    <script>
+        function deleteMenu(id) {
+            let confirmation = confirm("Sei sicuro di voler cancellare il menu #"
+                + id + "?");
+            if (!confirmation) {
+                return;
+            }
+            
+            $.ajax({
+                type: 'GET',
+                url: `@Url.Action("Delete", "Menu")/${id}`,
+                contentType: 'application/json; charset=utf-8',
+                success: (data) => {
+                    if (data) {
+                        location.href = "@Url.Action("Index", "Menu")"
+                    }
+                }
+            });
+        }
+    </script>
+}

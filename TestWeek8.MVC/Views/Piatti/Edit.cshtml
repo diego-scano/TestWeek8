@@ -1,0 +1,19 @@
+﻿@model PiattoViewModel
+
+<h1>Modifica il piatto #@Model.Id</h1>
+
+<div class="row">
+    <div class="col-3"></div>
+    <form class="col-lg-6 col-md-6 col-sm-12" asp-controller="Piatti" asp-action="Edit" method="post">
+
+        <partial name="_Form" model="Model" />
+
+        <div class="form-group">
+            <input type="submit" value="Salva" class="btn btn-primary" />
+        </div>
+    </form>
+
+    <div>
+        <a asp-action="Index">Torna alla lista dei piatti</a>
+    </div>
+</div>

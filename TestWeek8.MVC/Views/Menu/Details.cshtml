@@ -1,0 +1,60 @@
+﻿@model IEnumerable<PiattoViewModel>
+
+@if (User.IsInRole("Ristoratore"))
+{
+    <a asp-controller="Piatti" asp-action="Create" class="btn btn-primary">Inserisci un nuovo Piatto</a>
+}
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Nome</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Prezzo</th>
+            @if (User.IsInRole("Ristoratore"))
+            {
+                <th scope="col">Azioni</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Nome</td>
+                <td>@item.Tipo</td>
+                <td>@item.Prezzo €</td>
+                @if (User.IsInRole("Ristoratore"))
+                {
+                    <td>
+                        <a class="btn btn-warning" asp-controller="Piatti" asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit"></i></a>
+                        <a href="#" onclick="deletePiatto(@item.Id)" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts{
+    <script>
+        function deletePiatto(id) {
+            let confirmation = confirm("Sei sicuro di voler cancellare il piatto #"
+                + id + "?");
+            if (!confirmation) {
+                return;
+            }
+
+            $.ajax({
+                type: 'GET',
+                url: `@Url.Action("Delete", "Piatti")/${id}`,
+                contentType: 'application/json; charset=utf-8',
+                success: (data) => {
+                    if (data) {
+                        location.href = "@Url.Action("Details", "Menu")"
+                    }
+                }
+            });
+        }
+    </script>
+}

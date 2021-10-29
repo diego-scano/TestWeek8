@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,7 @@ namespace TestWeek8.MVC.Controllers
             return View(resultMap);
         }
 
+        [Authorize(Policy = "AdministratorUser")]
         public IActionResult Create()
         {
             return View(new MenuViewModel());
@@ -50,6 +52,7 @@ namespace TestWeek8.MVC.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize(Policy = "AdministratorUser")]
         public IActionResult Delete(int id)
         {
             if (id <= 0)

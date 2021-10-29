@@ -19,6 +19,7 @@ namespace TestWeek8.MVC.Controllers
             this.mainBL = mainBL;
         }
 
+        [Authorize(Policy = "AdministratorUser")]
         public IActionResult Create()
         {
             LoadViewBag();
@@ -37,6 +38,7 @@ namespace TestWeek8.MVC.Controllers
             return RedirectToAction("/");
         }
 
+        [Authorize(Policy = "AdministratorUser")]
         public IActionResult Edit(int id)
         {
             if (id <= 0)
@@ -65,6 +67,7 @@ namespace TestWeek8.MVC.Controllers
             return RedirectToAction("Details");
         }
 
+        [Authorize(Policy = "AdministratorUser")]
         public IActionResult Delete(int id)
         {
             if (id <= 0)

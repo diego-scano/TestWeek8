@@ -52,7 +52,7 @@ namespace TestWeek8.MVC.Helpers
                 Nome = piatto.Nome,
                 Tipo = piatto.Tipo,
                 Prezzo = piatto.Prezzo,
-                MenuId = piatto.MenuId,
+                MenuId = (int)piatto.MenuId,
                 Menu = piatto.Menu
             };
         }

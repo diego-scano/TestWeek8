@@ -13,7 +13,7 @@ namespace TestWeek8.Core.Models
         public string Nome { get; set; }
         public Tipologia Tipo { get; set; }
         public decimal Prezzo { get; set; }
-        public int MenuId { get; set; }
+        public int? MenuId { get; set; }
         public Menu Menu { get; set; }
     }
 }
